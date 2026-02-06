@@ -42,7 +42,9 @@ $htmlBody = "
 $data = [
     "from" => ["address" => "noreply@newemage.com.mx"],
     "to" => [
-        ["email_address" => ["address" => "jcarrasco@newemage.com", "name" => "Javier"]]
+        ["email_address" => ["address" => "jcarrasco@newemage.com", "name" => "Javier C."]],
+        ["email_address" => ["address" => "jmireles@pmj-industrial.com", "name" => "J. Mireles"]],
+        ["email_address" => ["address" => "jav7er@gmail.com", "name" => "Javier G."]]
     ],
     "subject" => "Nuevo Lead PMJ: " . $empresa,
     "htmlbody" => $htmlBody
