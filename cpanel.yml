@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/pmjindust/public_html/landing/
+    - /bin/cp -R * $DEPLOYPATH
