@@ -44,29 +44,49 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> PROCESANDO...';
         submitBtn.style.pointerEvents = 'none';
 
-        setTimeout(() => {
-            const formData = {
-                nombre: document.getElementById('nombre').value,
-                empresa: document.getElementById('empresa').value,
-                producto: document.getElementById('producto').value,
-                mercado: document.getElementById('mercado').value,
-                volumen: volumenSelect.value,
-                email: document.getElementById('email').value,
-                mensaje: document.getElementById('mensaje').value
-            };
+        const formData = {
+            nombre: document.getElementById('nombre').value,
+            empresa: document.getElementById('empresa').value,
+            producto: document.getElementById('producto').value,
+            mercado: document.getElementById('mercado').value,
+            volumen: volumenSelect.value,
+            email: document.getElementById('email').value,
+            mensaje: document.getElementById('mensaje').value
+        };
 
-            console.log('Lead Calificado (B2B):', formData);
+        fetch('send_email.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+            .then(response => {
+                if (!response.ok) throw new Error('Error en el servidor');
+                return response.json();
+            })
+            .then(data => {
+                submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> SOLICITUD ENVIADA';
+                submitBtn.style.background = '#059669';
 
-            submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> SOLICITUD ENVIADA';
-            submitBtn.style.background = '#059669';
+                setTimeout(() => {
+                    form.reset();
+                    submitBtn.innerHTML = 'Solicitar Cotización';
+                    submitBtn.style.background = '';
+                    submitBtn.style.pointerEvents = 'all';
+                }, 4000);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                submitBtn.innerHTML = '<i class="fas fa-times-circle"></i> ERROR AL ENVIAR';
+                submitBtn.style.background = '#dc2626';
 
-            setTimeout(() => {
-                form.reset();
-                submitBtn.innerHTML = 'Solicitar Cotización';
-                submitBtn.style.background = '';
-                submitBtn.style.pointerEvents = 'all';
-            }, 4000);
-        }, 1500);
+                setTimeout(() => {
+                    submitBtn.innerHTML = 'Solicitar Cotización';
+                    submitBtn.style.background = '';
+                    submitBtn.style.pointerEvents = 'all';
+                }, 4000);
+            });
     });
 
     // Smooth scroll optimizado
